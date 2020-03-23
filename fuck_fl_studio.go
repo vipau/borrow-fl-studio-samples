@@ -39,8 +39,6 @@ func main() {
 		// read file and close
 		content, err := ioutil.ReadAll(fin)
 		check(err)
-		err = fin.Close()
-		check(err)
 
 		newfile := strings.TrimSuffix(name, "wav") + "ogg"
 		fout, err := os.Create(newfile)
@@ -51,12 +49,15 @@ func main() {
 			// 0x36 to 0x3A should be "OggS"
 			!bytes.Equal(content[54:58], []byte{79, 103, 103, 83}) {
 			fmt.Println("not a OGG within a WAV..")
+			fout.Close()
 			os.Exit(4)
 		}
 		// delete the first 54 bytes
 		_, err = fin.Seek(54, io.SeekStart)
 		check(err)
 		_, err = io.Copy(fout, fin)
+		check(err)
+		err = fin.Close()
 		check(err)
 		err = fout.Close()
 		check(err)
