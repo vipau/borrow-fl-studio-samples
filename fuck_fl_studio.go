@@ -40,18 +40,20 @@ func main() {
 		content, err := ioutil.ReadAll(fin)
 		check(err)
 
-		newfile := strings.TrimSuffix(name, "wav") + "ogg"
-		fout, err := os.Create(newfile)
-		check(err)
 
 		// first 4 bytes should be RIFF
 		if !bytes.Equal(content[:4], []byte{82, 73, 70, 70}) ||
 			// 0x36 to 0x3A should be "OggS"
 			!bytes.Equal(content[54:58], []byte{79, 103, 103, 83}) {
 			fmt.Println("not a OGG within a WAV..")
-			fout.Close()
 			os.Exit(4)
 		}
+
+		// create new file
+		newfile := strings.TrimSuffix(name, "wav") + "ogg"
+		fout, err := os.Create(newfile)
+		check(err)
+
 		// delete the first 54 bytes
 		_, err = fin.Seek(54, io.SeekStart)
 		check(err)
