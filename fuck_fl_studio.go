@@ -48,6 +48,7 @@ func main() {
 			// 0x36 to 0x3A should be "OggS"
 			!bytes.Equal(content[54:58], []byte{79, 103, 103, 83}) {
 			fmt.Println("not a OGG within a WAV.. skipping")
+			_ = fin.Close()
 			continue
 		}
 
