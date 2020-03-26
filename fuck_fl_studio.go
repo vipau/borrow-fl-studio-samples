@@ -17,12 +17,12 @@ func check(err error) {
 }
 
 func main() {
-	fmt.Printf("Welcome you beautiful soul.\n" +
+	fmt.Println("Welcome you beautiful soul.\n" +
 		"Let's \"convert\" some FL studio \"wav\" samples to .ogg\n")
 
 	// We want parameters
 	if len(os.Args) < 2 {
-		fmt.Printf("Supply .wav filenames as parameters, or drag and drop files on the executable")
+		fmt.Println("Supply .wav filenames as parameters, or drag and drop files on the executable")
 		os.Exit(2)
 	}
 
@@ -30,7 +30,7 @@ func main() {
 	for _, name := range os.Args[1:] {
 		// wrap each item in a func so we can defer closing
 		if filepath.Ext(name) != ".wav" {
-			fmt.Printf("not .wav file extension, exiting.")
+			fmt.Println("not .wav file extension, exiting.")
 			os.Exit(3)
 		}
 		fin, err := os.Open(name)
