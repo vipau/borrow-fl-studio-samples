@@ -20,7 +20,7 @@ func main() {
 	fmt.Println("Welcome you beautiful soul.\n" +
 		"Let's \"convert\" some FL studio \"wav\" samples to .ogg\n")
 
-	// We want parameters
+	// We want at least 1 parameter
 	if len(os.Args) < 2 {
 		fmt.Println("Supply .wav filenames as parameters, or drag and drop files on the executable")
 		fmt.Println("Press enter to continue")
@@ -30,15 +30,16 @@ func main() {
 
 	// loop over all the params
 	for _, name := range os.Args[1:] {
-		// wrap each item in a func so we can defer closing
 		if filepath.Ext(name) != ".wav" {
 			fmt.Println("not .wav file extension, skipping.")
 			continue
 		}
+
+		// open file
 		fin, err := os.Open(name)
 		check(err)
 
-		// read file
+		// read content in memory
 		content, err := ioutil.ReadAll(fin)
 		check(err)
 
@@ -60,6 +61,8 @@ func main() {
 		// delete the first 54 bytes
 		_, err = fin.Seek(54, io.SeekStart)
 		check(err)
+
+		// copy remaining bytes to new file
 		_, err = io.Copy(fout, fin)
 		check(err)
 
