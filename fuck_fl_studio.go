@@ -32,8 +32,8 @@ func main() {
 	for _, name := range os.Args[1:] {
 		// wrap each item in a func so we can defer closing
 		if filepath.Ext(name) != ".wav" {
-			fmt.Println("not .wav file extension, exiting.")
-			os.Exit(3)
+			fmt.Println("not .wav file extension, skipping.")
+			continue
 		}
 		fin, err := os.Open(name)
 		check(err)
@@ -47,8 +47,8 @@ func main() {
 		if !bytes.Equal(content[:4], []byte{82, 73, 70, 70}) ||
 			// 0x36 to 0x3A should be "OggS"
 			!bytes.Equal(content[54:58], []byte{79, 103, 103, 83}) {
-			fmt.Println("not a OGG within a WAV..")
-			os.Exit(4)
+			fmt.Println("not a OGG within a WAV.. skipping")
+			continue
 		}
 
 		// create new file
