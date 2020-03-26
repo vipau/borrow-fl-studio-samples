@@ -23,6 +23,8 @@ func main() {
 	// We want parameters
 	if len(os.Args) < 2 {
 		fmt.Println("Supply .wav filenames as parameters, or drag and drop files on the executable")
+		fmt.Println("Press enter to continue")
+		fmt.Scanln()
 		os.Exit(2)
 	}
 
