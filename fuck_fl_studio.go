@@ -38,7 +38,7 @@ func main() {
 		fin, err := os.Open(name)
 		check(err)
 
-		// read file and close
+		// read file
 		content, err := ioutil.ReadAll(fin)
 		check(err)
 
@@ -62,6 +62,8 @@ func main() {
 		check(err)
 		_, err = io.Copy(fout, fin)
 		check(err)
+
+		// close files
 		err = fin.Close()
 		check(err)
 		err = fout.Close()
