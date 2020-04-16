@@ -43,7 +43,6 @@ func main() {
 		content, err := ioutil.ReadAll(fin)
 		check(err)
 
-
 		// first 4 bytes should be RIFF
 		if !bytes.Equal(content[:4], []byte{82, 73, 70, 70}) ||
 			// 0x36 to 0x3A should be "OggS"
