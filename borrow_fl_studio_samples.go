@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
@@ -24,7 +23,10 @@ func main() {
 	if len(os.Args) < 2 {
 		fmt.Println("Supply .wav filenames as parameters, or drag and drop files on the executable")
 		fmt.Println("Press enter to continue")
-		fmt.Scanln()
+		_, err := fmt.Scanln()
+		if err != nil {
+			panic(err)
+		}
 		os.Exit(2)
 	}
 
@@ -40,7 +42,7 @@ func main() {
 		check(err)
 
 		// read content in memory
-		content, err := ioutil.ReadAll(fin)
+		content, err := io.ReadAll(fin)
 		check(err)
 
 		// first 4 bytes should be RIFF
